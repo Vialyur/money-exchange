@@ -1,41 +1,56 @@
 // PLEASE DON'T change function name
 module.exports = function makeExchange(currency) {
-    let coins1 = { P : 0 };
-    let coins5 = { N : 0 };
-    let coins10 = { D : 0 };
-    let coins25 = { Q : 0 };
-    let coins50 = { H : 0 };
-    
-    let empty = {};
-    if (currency = 0) {
-        return empty;
-    }
-
-    let error = { error: "You are rich, my friend! We don't have so much coins for exchange"};
+	let error = {error: "You are rich, my friend! We don't have so much coins for exchange"};
     if (currency > 10000) {
         return error;
     }
 
- 
-    if (currency >= 50){
-        coins50.H = coins50.H + 1;
-        currency = currency - 50;
-    } else if (currency >= 25){
-        coins25.Q = coins25.Q + 1;
-        currency = currency - 25;
-    } else if (currency >= 10){
-        coins10.D = coins10.D + 1;
-        currency = currency - 10;
-    } else if (currency >= 5){
-        coins5.N = coins5.N + 1;;
-        currency = currency - 5;
-    } else if (currency >= 1){
-        coins1.P = coins1.P + 1;;
-        currency = currency - 1;
-    } else {
-        return;
+    if (currency <= 0){
+        return {}
     }
 
-    currency = {coins1, coins5, coins10, coins25, coins50};
-    return currency;
+    let coins = {
+        P: 0,
+        N: 0, 
+        D: 0,
+        Q: 0, 
+        H: 0
+	};
+
+    while (currency > 0) {
+        if (currency >= 50) {
+            coins.H = coins.H + 1;
+            currency = currency - 50;
+        } else if (currency >= 25) {
+            coins.Q = coins.Q + 1;
+            currency = currency - 25;
+        } else if (currency >= 10) {
+            coins.D = coins.D + 1;
+            currency = currency - 10;
+        } else if (currency >= 5) {
+            coins.N = coins.N + 1;
+            currency = currency - 5;
+        } else if (currency >= 1) {
+            coins.P = coins.P + 1;
+            currency = currency - 1;
+        } 
+    }
+	
+	if (!coins.P) {
+		delete coins.P;
+	}
+	if (!coins.N) {
+		delete coins.N;
+	}
+	if (!coins.D) {
+		delete coins.D;
+	}
+	if (!coins.Q) {
+		delete coins.Q;
+	}
+	if (!coins.H) {
+		delete coins.H;
+	}
+
+    return coins;
 }
